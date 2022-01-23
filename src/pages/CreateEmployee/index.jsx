@@ -5,7 +5,11 @@ import { Box, TextField } from '@mui/material';
 function CreateEmployee() {
   return (
       <Box>
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+        <TextField
+            id="outlined-basic"
+            label="Outlined"
+            variant="outlined"
+        />
       </Box>
   );
 }
