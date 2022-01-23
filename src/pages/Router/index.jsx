@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as ReactRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/styles';
-import DataGridEmployee from '../pages/DataGridEmployee';
-import CreateEmployee from '../pages/CreateEmployee';
+import DataGridEmployee from '../DataGridEmployee';
+import CreateEmployee from '../CreateEmployee';
 import paths from './paths';
 
 
