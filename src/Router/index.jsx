@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as ReactRouter, Navigate, Route, Routes } from 'react-router-dom';
-import DataGridEmployee from '../src/pages/DataGridEmployee';
-import CreateEmployee from '../src/pages/CreateEmployee';
-import paths from './Router/paths';
+import DataGridEmployee from '../pages/DataGridEmployee';
+import CreateEmployee from '../pages/CreateEmployee';
+import paths from './paths';
 
 
-function App() {
+function Router() {
   return (
       <>
         <ReactRouter>
@@ -24,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default Router;
