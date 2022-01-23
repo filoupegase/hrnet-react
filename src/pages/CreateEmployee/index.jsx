@@ -1,10 +1,10 @@
 import React from 'react';
 
 
-const CreateEmployee = () => {
+function CreateEmployee() {
   return (
       <p>CreateEmployee</p>
   );
-};
+}
 
 export default CreateEmployee;
