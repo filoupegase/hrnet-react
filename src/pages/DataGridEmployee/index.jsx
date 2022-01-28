@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from '@mui/material';
+import paths from '../Router/paths';
 
 
 const DataGridEmployee = () => {
   return (
       <>
-        <p>DataGridEmployee</p>
+        <Link href={ paths.ROOT } underline="always">
+          Home
+        </Link>
       </>
   );
 };

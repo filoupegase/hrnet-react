@@ -9,7 +9,7 @@ import paths from './paths';
 
 const useStyle = makeStyles((theme) => ({
   container: {
-    backgroundColor: '#f4f7ea'
+    backgroundColor: '#f4f7ea',
   }
 }));
 
