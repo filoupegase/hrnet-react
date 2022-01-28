@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, TextField, Link } from '@mui/material';
+import { Box, Link } from '@mui/material';
 import paths from '../Router/paths';
+import CreateEmployeeForm from '../../components/CreateEmployeeForm';
 
 
 function CreateEmployee() {
@@ -12,28 +13,9 @@ function CreateEmployee() {
           } }
       >
         <Link href={ paths.EMPLOYEE } underline="always">
-          Grid >
+          Current Employee >
         </Link>
-        <TextField
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-        />
-        <TextField
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-        />
-        <TextField
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-        />
-        <TextField
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-        />
+        <CreateEmployeeForm />
       </Box>
   );
 }

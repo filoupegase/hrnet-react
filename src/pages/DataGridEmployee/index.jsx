@@ -57,7 +57,9 @@ const DataGridEmployee = ({ employeesList }) => {
       <Box
           sx={ {
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            alignItems: 'center',
+            pt: 9
           } }
       >
         <Link href={ paths.ROOT } underline="always">
