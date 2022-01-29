@@ -5,6 +5,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import { CITY_USA } from '../../utils/constants';
+import { AlertDialog } from 'filou-dialog-modal';
 
 
 const useStyle = makeStyles(() => ({
@@ -25,6 +26,9 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
   const [selectCity, setSelectCity] = useState([]);
   const [zipCode, setZipCode] = useState('');
   const [selectDepartment, setSelectDepartment] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+  const onOpenModal = () => setOpenModal(true);
+  const onCloseModal = () => setOpenModal(false);
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
@@ -38,7 +42,7 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
       zipCode,
       selectDepartment
     });
-    console.log('is ok', handleSubmit);
+    onOpenModal();
   };
 
   const convertDate = (date) => {
@@ -70,109 +74,118 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
   };
 
   return (
-      <form
-          onSubmit={ handleSubmitForm }
-          className={ classes.form }
-      >
-        <TextField
-            type="text"
-            id="firstname"
-            label="FirstName"
-            variant="outlined"
-            value={ firstName }
-            onChange={
-              (e) => handleChange(e, setFirstName) }
-        />
-        <TextField
-            type="text"
-            id="lastName"
-            label="LastName"
-            variant="outlined"
-            value={ lastName }
-            onChange={
-              (e) => handleChange(e, setLastName) }
-        />
-        <LocalizationProvider dateAdapter={ AdapterDateFns }>
-          <DatePicker
-              label="Date of Birth"
-              value={ dateOfBirth }
-              onChange={ (date) => handleChangeDate(date, setDateOfBirth) }
-              renderInput={ (params) => <TextField { ...params } /> }
+      <>
+        <form
+            onSubmit={ handleSubmitForm }
+            className={ classes.form }
+        >
+          <TextField
+              type="text"
+              id="firstname"
+              label="FirstName"
+              variant="outlined"
+              value={ firstName }
+              onChange={
+                (e) => handleChange(e, setFirstName) }
           />
-        </LocalizationProvider>
+          <TextField
+              type="text"
+              id="lastName"
+              label="LastName"
+              variant="outlined"
+              value={ lastName }
+              onChange={
+                (e) => handleChange(e, setLastName) }
+          />
+          <LocalizationProvider dateAdapter={ AdapterDateFns }>
+            <DatePicker
+                label="Date of Birth"
+                value={ dateOfBirth }
+                onChange={ (date) => handleChangeDate(date, setDateOfBirth) }
+                renderInput={ (params) => <TextField { ...params } /> }
+            />
+          </LocalizationProvider>
 
-        <LocalizationProvider dateAdapter={ AdapterDateFns }>
-          <DatePicker
-              label="Start Date"
-              value={ startDate }
-              onChange={ (date) => handleChangeDate(date, setStartDate) }
-              renderInput={ (params) => <TextField { ...params } /> }
+          <LocalizationProvider dateAdapter={ AdapterDateFns }>
+            <DatePicker
+                label="Start Date"
+                value={ startDate }
+                onChange={ (date) => handleChangeDate(date, setStartDate) }
+                renderInput={ (params) => <TextField { ...params } /> }
+            />
+          </LocalizationProvider>
+          <TextField
+              type="text"
+              id="street"
+              label="Street"
+              variant="outlined"
+              value={ streetValue }
+              onChange={
+                (e) => handleChange(e, setStreetValue) }
           />
-        </LocalizationProvider>
-        <TextField
-            type="text"
-            id="street"
-            label="Street"
-            variant="outlined"
-            value={ streetValue }
-            onChange={
-              (e) => handleChange(e, setStreetValue) }
+          <TextField
+              type="text"
+              id="city"
+              label="City"
+              variant="outlined"
+              value={ cityValue }
+              onChange={
+                (e) => handleChange(e, setCityValue) }
+          />
+          <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              value={ selectCity }
+              onChange={ handleChangeState }
+          >
+            { CITY_USA.map((city) => (
+                <MenuItem
+                    key={ city.value }
+                    value={ city.value }
+                >
+                  { city.text }
+                </MenuItem>
+            )) }
+          </Select>
+          <TextField
+              id="outlined-number"
+              label="Zip Code"
+              type="number"
+              InputLabelProps={ {
+                shrink: true
+              } }
+              value={ zipCode }
+              onChange={
+                (e) => handleChange(e, setZipCode) }
+          />
+          <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={ selectDepartment }
+              label="Department"
+              onChange={ handleChangeDepartment }
+          >
+            <MenuItem value="sales">Sales</MenuItem>
+            <MenuItem value="engineering">Engineering</MenuItem>
+            <MenuItem value="hr">Human Resources</MenuItem>
+            <MenuItem value="legal">Legal</MenuItem>
+          </Select>
+          <Button
+              type="submit"
+              variant="contained"
+              disableElevation
+          >
+            Save
+          </Button>
+        </form>
+        <AlertDialog
+            title="Good Job"
+            description="Employee successfully created !"
+            btnCloseContent="close"
+            open={ openModal }
+            onCancel={ onCloseModal }
         />
-        <TextField
-            type="text"
-            id="city"
-            label="City"
-            variant="outlined"
-            value={ cityValue }
-            onChange={
-              (e) => handleChange(e, setCityValue) }
-        />
-        <Select
-            labelId="demo-multiple-name-label"
-            id="demo-multiple-name"
-            value={ selectCity }
-            onChange={ handleChangeState }
-        >
-          { CITY_USA.map((city) => (
-              <MenuItem
-                  key={ city.value }
-                  value={ city.value }
-              >
-                { city.text }
-              </MenuItem>
-          )) }
-        </Select>
-        <TextField
-            id="outlined-number"
-            label="Zip Code"
-            type="number"
-            InputLabelProps={ {
-              shrink: true
-            } }
-            value={ zipCode }
-            onChange={
-              (e) => handleChange(e, setZipCode) }
-        />
-        <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={ selectDepartment }
-            label="Department"
-            onChange={ handleChangeDepartment }
-        >
-          <MenuItem value="sales">Sales</MenuItem>
-          <MenuItem value="engineering">Engineering</MenuItem>
-          <MenuItem value="hr">Human Resources</MenuItem>
-          <MenuItem value="legal">Legal</MenuItem>
-        </Select>
-        <Button
-            type="submit"
-            variant="contained"
-            disableElevation
-        >
-          Save
-        </Button>
-      </form>
+      </>
   );
 };
 
