@@ -4,7 +4,7 @@ import paths from '../Router/paths';
 import CreateEmployeeForm from '../../components/CreateEmployeeForm';
 
 
-function CreateEmployee({handleSubmit}) {
+function CreateEmployee() {
   return (
       <Box
           sx={ {
@@ -15,9 +15,7 @@ function CreateEmployee({handleSubmit}) {
         <Link href={ paths.EMPLOYEE } underline="always">
           Current Employee >
         </Link>
-        <CreateEmployeeForm
-            handleSubmit={handleSubmit}
-        />
+        <CreateEmployeeForm />
       </Box>
   );
 }

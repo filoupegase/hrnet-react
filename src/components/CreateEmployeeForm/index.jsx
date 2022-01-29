@@ -15,35 +15,23 @@ const useStyle = makeStyles(() => ({
   }
 }));
 
-const CreateEmployeeForm = ({ handleSubmit }) => {
+const CreateEmployeeForm = () => {
   const classes = useStyle();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(new Date('1997-01-01'));
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [dateBirth, setDateBirth] = useState(new Date('1997-01-01'));
   const [startDate, setStartDate] = useState(new Date());
-  const [streetValue, setStreetValue] = useState('');
-  const [cityValue, setCityValue] = useState('');
-  const [selectCity, setSelectCity] = useState([]);
+  const [street, setStreet] = useState('');
+  const [stateName, setStateName] = useState('');
+  console.log('stateName', stateName);
+  const [city, setCity] = useState('');
   const [zipCode, setZipCode] = useState('');
-  const [selectDepartment, setSelectDepartment] = useState('');
+  const [department, setDepartment] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const onOpenModal = () => setOpenModal(true);
   const onCloseModal = () => setOpenModal(false);
 
-  const handleSubmitForm = (event) => {
-    event.preventDefault();
-    handleSubmit({
-      firstName,
-      lastName,
-      dateOfBirth: convertDate(dateOfBirth),
-      startDate: convertDate(startDate),
-      streetValue,
-      selectCity,
-      zipCode,
-      selectDepartment
-    });
-    onOpenModal();
-  };
+  let infoLocalStorage = JSON.parse(localStorage.getItem('employee')) || [];
 
   const convertDate = (date) => {
     const month = date.getUTCMonth() + 1;
@@ -52,17 +40,35 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
     return `${ year }-${ month }-${ day }`;
   };
 
+  const infoEmployee = {
+    firstname,
+    lastname,
+    startDate: convertDate(startDate),
+    department,
+    dateBirth: convertDate(dateBirth),
+    street,
+    city,
+    stateName,
+    zipCode
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    infoLocalStorage.push(infoEmployee);
+
+    const infosEmployeeStorage = JSON.stringify(infoLocalStorage);
+    localStorage.setItem('employee', infosEmployeeStorage);
+
+    onOpenModal();
+  };
+
   const handleChange = (e, set) => {
     set(e.target.value);
   };
 
-  const handleChangeState = (event) => {
-    const { target: { value } } = event;
-    setSelectCity(value);
-  };
-
   const handleChangeDepartment = (event) => {
-    setSelectDepartment(event.target.value);
+    setDepartment(event.target.value);
   };
 
   const handleChangeDate = (date, setter) => {
@@ -73,10 +79,10 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
     setter(formattedDate);
   };
 
+
   return (
       <>
         <form
-            onSubmit={ handleSubmitForm }
             className={ classes.form }
         >
           <TextField
@@ -84,24 +90,24 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
               id="firstname"
               label="FirstName"
               variant="outlined"
-              value={ firstName }
+              value={ firstname }
               onChange={
-                (e) => handleChange(e, setFirstName) }
+                (e) => handleChange(e, setFirstname) }
           />
           <TextField
               type="text"
               id="lastName"
               label="LastName"
               variant="outlined"
-              value={ lastName }
+              value={ lastname }
               onChange={
-                (e) => handleChange(e, setLastName) }
+                (e) => handleChange(e, setLastname) }
           />
           <LocalizationProvider dateAdapter={ AdapterDateFns }>
             <DatePicker
                 label="Date of Birth"
-                value={ dateOfBirth }
-                onChange={ (date) => handleChangeDate(date, setDateOfBirth) }
+                value={ dateBirth }
+                onChange={ (date) => handleChangeDate(date, setDateBirth) }
                 renderInput={ (params) => <TextField { ...params } /> }
             />
           </LocalizationProvider>
@@ -119,34 +125,25 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
               id="street"
               label="Street"
               variant="outlined"
-              value={ streetValue }
+              value={ street }
               onChange={
-                (e) => handleChange(e, setStreetValue) }
+                (e) => handleChange(e, setStreet) }
           />
           <TextField
               type="text"
               id="city"
               label="City"
               variant="outlined"
-              value={ cityValue }
+              value={ city }
               onChange={
-                (e) => handleChange(e, setCityValue) }
+                (e) => handleChange(e, setCity) }
           />
-          <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              value={ selectCity }
-              onChange={ handleChangeState }
-          >
-            { CITY_USA.map((city) => (
-                <MenuItem
-                    key={ city.value }
-                    value={ city.value }
-                >
-                  { city.text }
-                </MenuItem>
-            )) }
-          </Select>
+          <select aria-required="true" name="state" id="state" onChange={ (e) => setStateName(e.target.value) } required
+                  value={ stateName }>
+            { CITY_USA.map(state => {
+              return (<option key={ state.name } value={ state.name }>{ state.name }</option>);
+            }) }
+          </select>
           <TextField
               id="outlined-number"
               label="Zip Code"
@@ -161,7 +158,7 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
           <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={ selectDepartment }
+              value={ department }
               label="Department"
               onChange={ handleChangeDepartment }
           >
@@ -174,6 +171,7 @@ const CreateEmployeeForm = ({ handleSubmit }) => {
               type="submit"
               variant="contained"
               disableElevation
+              onClick={ (e) => handleSubmit(e) }
           >
             Save
           </Button>

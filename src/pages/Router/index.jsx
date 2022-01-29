@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as ReactRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/styles';
@@ -15,10 +15,7 @@ const useStyle = makeStyles((theme) => ({
 
 function Router() {
   const classes = useStyle();
-  const [employee, setEmployee] = useState([]);
-  const submitEmployee = (newEmployee) => {
-    setEmployee([...employee, newEmployee]);
-  };
+
   return (
       <>
         <ReactRouter>
@@ -29,12 +26,10 @@ function Router() {
             <Routes>
               <Route path={ paths.ROOT }
                      element={ <CreateEmployee
-                         handleSubmit={ submitEmployee }
                      /> }
                      strict exact />
               <Route path={ paths.EMPLOYEE }
                      element={ <DataGridEmployee
-                         employeesData={ employee }
                      /> }
                      strict exact />
               <Route path={ paths.DEFAULT } element={
