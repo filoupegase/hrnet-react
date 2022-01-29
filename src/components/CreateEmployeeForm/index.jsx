@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
 
 const useStyle = makeStyles(() => ({
@@ -13,7 +16,10 @@ const useStyle = makeStyles(() => ({
 const CreateEmployeeForm = () => {
   const classes = useStyle();
   const [firstName, setFirstName] = useState('');
-  console.log(firstName);
+  const [lastName, setLastName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [streetValue, setStreetValue] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,14 +44,43 @@ const CreateEmployeeForm = () => {
               (e) => handleChange(e, setFirstName) }
         />
         <TextField
-            id="outlined-basic"
-            label="Outlined"
+            type="text"
+            id="lastName"
+            label="LastName"
             variant="outlined"
+            value={ lastName }
+            onChange={
+              (e) => handleChange(e, setLastName) }
         />
+        <LocalizationProvider dateAdapter={ AdapterDateFns }>
+          <DatePicker
+              label="Date of Birth"
+              value={ dateOfBirth }
+              onChange={ (newValue) => {
+                setDateOfBirth(newValue);
+              } }
+              renderInput={ (params) => <TextField { ...params } /> }
+          />
+        </LocalizationProvider>
+
+        <LocalizationProvider dateAdapter={ AdapterDateFns }>
+          <DatePicker
+              label="Start Date"
+              value={ startDate }
+              onChange={ (newValue) => {
+                setStartDate(newValue);
+              } }
+              renderInput={ (params) => <TextField { ...params } /> }
+          />
+        </LocalizationProvider>
         <TextField
-            id="outlined-basic"
-            label="Outlined"
+            type="text"
+            id="street"
+            label="Street"
             variant="outlined"
+            value={ streetValue }
+            onChange={
+              (e) => handleChange(e, setStreetValue) }
         />
         <TextField
             id="outlined-basic"
