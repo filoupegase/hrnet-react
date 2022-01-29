@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as ReactRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/styles';
@@ -9,12 +9,16 @@ import paths from './paths';
 
 const useStyle = makeStyles((theme) => ({
   container: {
-    backgroundColor: '#f4f7ea',
+    backgroundColor: '#f4f7ea'
   }
 }));
 
 function Router() {
   const classes = useStyle();
+  const [employee, setEmployee] = useState([]);
+  const submitEmployee = (newEmployee) => {
+    setEmployee([...employee, newEmployee]);
+  };
   return (
       <>
         <ReactRouter>
@@ -24,10 +28,14 @@ function Router() {
           >
             <Routes>
               <Route path={ paths.ROOT }
-                     element={ <CreateEmployee /> }
+                     element={ <CreateEmployee
+                         handleSubmit={ submitEmployee }
+                     /> }
                      strict exact />
               <Route path={ paths.EMPLOYEE }
-                     element={ <DataGridEmployee /> }
+                     element={ <DataGridEmployee
+                         employeesData={ employee }
+                     /> }
                      strict exact />
               <Route path={ paths.DEFAULT } element={
                 <Navigate to={ paths.ROOT } /> }

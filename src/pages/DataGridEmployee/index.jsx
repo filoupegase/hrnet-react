@@ -42,7 +42,7 @@ const exampleData = [
   }
 ];
 
-const DataGridEmployee = ({ employeesList }) => {
+const DataGridEmployee = ({ employeesData }) => {
 
   /*  const employeesData = employeesList.map((elt) => ({
       ...elt,
@@ -52,6 +52,7 @@ const DataGridEmployee = ({ employeesList }) => {
       state: elt.state.value,
     }));
     console.log(employeesData);*/
+  console.log('employeesData', employeesData)
 
   return (
       <Box

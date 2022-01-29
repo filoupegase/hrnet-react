@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, MenuItem, InputLabel, Select, FormControl } from '@mui/material';
+import { TextField, MenuItem, Select, Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -14,20 +14,38 @@ const useStyle = makeStyles(() => ({
   }
 }));
 
-const CreateEmployeeForm = () => {
+const CreateEmployeeForm = ({ handleSubmit }) => {
   const classes = useStyle();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(null);
-  const [startDate, setStartDate] = useState(null);
+  const [dateOfBirth, setDateOfBirth] = useState(new Date('1997-01-01'));
+  const [startDate, setStartDate] = useState(new Date());
   const [streetValue, setStreetValue] = useState('');
   const [cityValue, setCityValue] = useState('');
   const [selectCity, setSelectCity] = useState([]);
   const [zipCode, setZipCode] = useState('');
   const [selectDepartment, setSelectDepartment] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmitForm = (event) => {
     event.preventDefault();
+    handleSubmit({
+      firstName,
+      lastName,
+      dateOfBirth: convertDate(dateOfBirth),
+      startDate: convertDate(startDate),
+      streetValue,
+      selectCity,
+      zipCode,
+      selectDepartment
+    });
+    console.log('is ok', handleSubmit);
+  };
+
+  const convertDate = (date) => {
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate() + 1;
+    const year = date.getUTCFullYear();
+    return `${ year }-${ month }-${ day }`;
   };
 
   const handleChange = (e, set) => {
@@ -43,9 +61,17 @@ const CreateEmployeeForm = () => {
     setSelectDepartment(event.target.value);
   };
 
+  const handleChangeDate = (date, setter) => {
+    const month = date.getUTCMonth();
+    const day = date.getUTCDate() + 1;
+    const year = date.getUTCFullYear();
+    const formattedDate = new Date(year, month, day);
+    setter(formattedDate);
+  };
+
   return (
       <form
-          onSubmit={ handleSubmit }
+          onSubmit={ handleSubmitForm }
           className={ classes.form }
       >
         <TextField
@@ -70,9 +96,7 @@ const CreateEmployeeForm = () => {
           <DatePicker
               label="Date of Birth"
               value={ dateOfBirth }
-              onChange={ (newValue) => {
-                setDateOfBirth(newValue);
-              } }
+              onChange={ (date) => handleChangeDate(date, setDateOfBirth) }
               renderInput={ (params) => <TextField { ...params } /> }
           />
         </LocalizationProvider>
@@ -81,9 +105,7 @@ const CreateEmployeeForm = () => {
           <DatePicker
               label="Start Date"
               value={ startDate }
-              onChange={ (newValue) => {
-                setStartDate(newValue);
-              } }
+              onChange={ (date) => handleChangeDate(date, setStartDate) }
               renderInput={ (params) => <TextField { ...params } /> }
           />
         </LocalizationProvider>
@@ -143,6 +165,13 @@ const CreateEmployeeForm = () => {
           <MenuItem value="hr">Human Resources</MenuItem>
           <MenuItem value="legal">Legal</MenuItem>
         </Select>
+        <Button
+            type="submit"
+            variant="contained"
+            disableElevation
+        >
+          Save
+        </Button>
       </form>
   );
 };
