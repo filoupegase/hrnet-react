@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as ReactRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/styles';
 import DataGridEmployee from '../DataGridEmployee';
@@ -15,10 +15,9 @@ const useStyle = makeStyles((theme) => ({
 
 function Router() {
   const classes = useStyle();
-
   return (
       <>
-        <ReactRouter>
+        <BrowserRouter>
           <Container
               className={ classes.container }
               fixed
@@ -37,7 +36,7 @@ function Router() {
                      strict exact />
             </Routes>
           </Container>
-        </ReactRouter>
+        </BrowserRouter>
       </>
   );
 }
