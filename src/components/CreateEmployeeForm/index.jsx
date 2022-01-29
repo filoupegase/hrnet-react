@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { TextField } from '@mui/material';
+import { TextField, MenuItem, InputLabel, Select, FormControl } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { CITY_USA } from '../../utils/constants';
 
 
 const useStyle = makeStyles(() => ({
@@ -20,6 +21,8 @@ const CreateEmployeeForm = () => {
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [streetValue, setStreetValue] = useState('');
+  const [cityValue, setCityValue] = useState('');
+  const [selectCity, setSelectCity] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,6 +30,11 @@ const CreateEmployeeForm = () => {
 
   const handleChange = (e, set) => {
     set(e.target.value);
+  };
+
+  const handleChangeState = (event) => {
+    const { target: { value } } = event;
+    setSelectCity(value);
   };
 
   return (
@@ -82,6 +90,33 @@ const CreateEmployeeForm = () => {
             onChange={
               (e) => handleChange(e, setStreetValue) }
         />
+        <TextField
+            type="text"
+            id="city"
+            label="City"
+            variant="outlined"
+            value={ cityValue }
+            onChange={
+              (e) => handleChange(e, setCityValue) }
+        />
+        <FormControl sx={ { m: 1, width: 300 } }>
+          <InputLabel id="demo-multiple-name-label">State</InputLabel>
+          <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              value={ selectCity }
+              onChange={ handleChangeState }
+          >
+            { CITY_USA.map((city) => (
+                <MenuItem
+                    key={ city.value }
+                    value={ city.text }
+                >
+                  { city.text }
+                </MenuItem>
+            )) }
+          </Select>
+        </FormControl>
         <TextField
             id="outlined-basic"
             label="Outlined"
