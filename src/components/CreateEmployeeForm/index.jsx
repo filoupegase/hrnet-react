@@ -23,6 +23,8 @@ const CreateEmployeeForm = () => {
   const [streetValue, setStreetValue] = useState('');
   const [cityValue, setCityValue] = useState('');
   const [selectCity, setSelectCity] = useState([]);
+  const [zipCode, setZipCode] = useState('');
+  const [selectDepartment, setSelectDepartment] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,6 +37,10 @@ const CreateEmployeeForm = () => {
   const handleChangeState = (event) => {
     const { target: { value } } = event;
     setSelectCity(value);
+  };
+
+  const handleChangeDepartment = (event) => {
+    setSelectDepartment(event.target.value);
   };
 
   return (
@@ -99,29 +105,44 @@ const CreateEmployeeForm = () => {
             onChange={
               (e) => handleChange(e, setCityValue) }
         />
-        <FormControl sx={ { m: 1, width: 300 } }>
-          <InputLabel id="demo-multiple-name-label">State</InputLabel>
-          <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              value={ selectCity }
-              onChange={ handleChangeState }
-          >
-            { CITY_USA.map((city) => (
-                <MenuItem
-                    key={ city.value }
-                    value={ city.text }
-                >
-                  { city.text }
-                </MenuItem>
-            )) }
-          </Select>
-        </FormControl>
+        <Select
+            labelId="demo-multiple-name-label"
+            id="demo-multiple-name"
+            value={ selectCity }
+            onChange={ handleChangeState }
+        >
+          { CITY_USA.map((city) => (
+              <MenuItem
+                  key={ city.value }
+                  value={ city.value }
+              >
+                { city.text }
+              </MenuItem>
+          )) }
+        </Select>
         <TextField
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
+            id="outlined-number"
+            label="Zip Code"
+            type="number"
+            InputLabelProps={ {
+              shrink: true
+            } }
+            value={ zipCode }
+            onChange={
+              (e) => handleChange(e, setZipCode) }
         />
+        <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={ selectDepartment }
+            label="Department"
+            onChange={ handleChangeDepartment }
+        >
+          <MenuItem value="sales">Sales</MenuItem>
+          <MenuItem value="engineering">Engineering</MenuItem>
+          <MenuItem value="hr">Human Resources</MenuItem>
+          <MenuItem value="legal">Legal</MenuItem>
+        </Select>
       </form>
   );
 };
