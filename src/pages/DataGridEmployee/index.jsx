@@ -6,7 +6,6 @@ import { DataGrid } from '../../components/DataGrid';
 
 const DataGridEmployee = () => {
   const [employeeList, setEmployeeList] = useState([]);
-  console.log('employeeList >>', employeeList);
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem('employee'));
