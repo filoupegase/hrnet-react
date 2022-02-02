@@ -11,7 +11,6 @@ const DataGridEmployee = () => {
     let data = JSON.parse(localStorage.getItem('employee'));
     setEmployeeList(data);
   }, []);
-  console.log(employeeList);
 
   return (
       <Box
@@ -28,9 +27,11 @@ const DataGridEmployee = () => {
         <Box
             sx={ { m: 10 } }
         >
-          { employeeList.length > 0 ? <DataGrid
-                  data={ employeeList } />
-              : <p>salut</p>
+          {
+            !employeeList
+                ? <p>Un tableau vide</p>
+                : <DataGrid
+                    data={ employeeList } />
           }
         </Box>
       </Box>
