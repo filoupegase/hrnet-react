@@ -1,4 +1,4 @@
-# ktr-msc-ls1 - {EPITECH.}
+# hrnet-react - {OpenClassrooms}
 
 
 ### Installation Require :
