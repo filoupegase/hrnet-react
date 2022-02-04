@@ -23,7 +23,6 @@ const CreateEmployeeForm = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [street, setStreet] = useState('');
   const [stateName, setStateName] = useState('');
-  console.log('stateName', stateName);
   const [city, setCity] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [department, setDepartment] = useState('');
