@@ -29,7 +29,12 @@ const DataGridEmployee = () => {
         >
           {
             !employeeList
-                ? <p>Un tableau vide</p>
+                ? <>
+                  <p>There are no employees at the moment, Create it !</p>
+                  <Link href={ paths.ROOT } underline="always">
+                    Create Employee
+                  </Link>
+                </>
                 : <DataGrid
                     data={ employeeList } />
           }

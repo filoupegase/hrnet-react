@@ -8,8 +8,10 @@ function CreateEmployee() {
   return (
       <Box
           sx={ {
+            mt: 3,
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            alignItems: 'center'
           } }
       >
         <Link href={ paths.EMPLOYEE } underline="always">
